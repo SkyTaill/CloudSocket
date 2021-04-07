@@ -1,5 +1,6 @@
 package Client;
 
+import Server.CorMessage;
 import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
 import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
 import javafx.application.Platform;
