@@ -8,20 +8,21 @@ public class CorMessage implements Serializable {
     private String text;
     private Byte file;
 
-    public void setFile(Byte file) {
+
+    public CorMessage(String userName, String text,Byte file) {
+        this.userName = userName;
+        this.text = text;
+        this.file=file;
+
+    }
+
+    public void setFile(byte file) {
         this.file = file;
     }
 
     public Byte getFile() {
         return file;
     }
-
-    public CorMessage(String userName, String text) {
-        this.userName = userName;
-        this.text = text;
-
-    }
-
     public String getUserName() {
         return userName;
     }

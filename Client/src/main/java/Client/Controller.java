@@ -22,7 +22,7 @@ public class Controller implements Initializable {
     private ObjectDecoderInputStream is;
 
     public void send(ActionEvent actionEvent) throws IOException {
-        os.writeObject(new CorMessage("user", in.getText()));
+        os.writeObject(new CorMessage("user", in.getText(),null));
         os.flush();
     }
 

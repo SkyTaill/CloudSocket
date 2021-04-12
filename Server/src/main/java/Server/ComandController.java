@@ -3,7 +3,8 @@ package Server;
 import java.io.File;
 
 public class ComandController {
-    private String serverDir = "C:\\Users\\Максим\\Desktop\\UsersCloud";
+        private String serverDir = "C:\\Users\\Максим\\Desktop\\UsersCloud";
+         // private String serverDir = "./";
     private String userName = "user";
     private static final int BUFFER_SIZE = 1024;
     public void  printDirComand(CorMessage message, String userDir) {
