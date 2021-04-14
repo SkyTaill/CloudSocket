@@ -7,13 +7,14 @@ public class CorMessage implements Serializable {
     private String userName;
     private String text;
     private Byte file;
+    private Boolean authentication;
 
 
-    public CorMessage(String userName, String text,Byte file) {
+    public CorMessage(String userName, String text,Byte file,boolean authentication) {
         this.userName = userName;
         this.text = text;
         this.file=file;
-
+        this.authentication=authentication;
     }
 
     public void setFile(byte file) {
@@ -39,13 +40,20 @@ public class CorMessage implements Serializable {
         this.text = text;
     }
 
+    public Boolean getAuthentication() {
+        return authentication;
+    }
 
+    public void setAuthentication(Boolean authentication) {
+        this.authentication = authentication;
+    }
 
     @Override
     public String toString() {
         return "Message{" +
                 "userName='" + userName + '\'' +
                 ", text='" + text + '\'' +
+                ", authentication='" +  authentication + '\'' +
                 '}';
     }
 }
