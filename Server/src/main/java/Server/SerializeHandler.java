@@ -73,10 +73,22 @@ public class SerializeHandler extends SimpleChannelInboundHandler<CorMessage> {
       /////////////////////     ////////////
         }
         else if(comand.startsWith("Login")){
-            System.out.println(message.getText());
+
+            String[] data = comand.split(" +");
+            String fileName = data[1];
+
+
             //проверяем в бд лог и пароль
-            message.setText("TruePass");
-            //message.setAuthentication(true);
+            System.out.println(data[1]);
+            System.out.println(data[2]);
+
+            if(DataBase.checkPass(data[1],data[2])) {
+                message.setUserName(data[1]);
+                message.setAuthentication(true);
+            }else{
+
+            }
+
         }
         else if(comand.startsWith("delete")){
             String[] data = comand.split(" +");

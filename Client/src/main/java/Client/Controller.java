@@ -27,7 +27,7 @@ public class Controller implements Initializable {
     public TextArea out;
     private ObjectEncoderOutputStream os;
     private ObjectDecoderInputStream is;
-
+    private boolean crutch=false;    //костыль
     @FXML
     private TextField LoginField;
 
@@ -40,25 +40,37 @@ public class Controller implements Initializable {
     @FXML
     private Button RegistrButton;
 
+    public static String crutchLog="users";  //костыль
 
     public void send(ActionEvent actionEvent) throws IOException {
-        os.writeObject(new CorMessage("user", in.getText(),null,false));
+        os.writeObject(new CorMessage(crutchLog, in.getText(),null,false));
         os.flush();
     }
-    public void passCheck(ActionEvent actionEvent)throws IOException{
-
+    public void passCheck(ActionEvent actionEvent) throws IOException, InterruptedException {
             System.out.println("ddd");
         String logAndPass;
         logAndPass="Login"+" "+LoginField.getText()+" "+PassField.getText();
-        os.writeObject(new CorMessage("user", logAndPass,null,false));
 
 
-                     startNewWindow();   //пофиксить что б нормс работало
+     //******************************
+
+        crutchLog=LoginField.getText();     //ОООООч неправильно работает, главная проблема что не безопасно для других пользователей
+                                            //не понял как в netty работать с разными клиентами и реализовал такой костыль
 
 
+
+    //***************************
+
+
+        os.writeObject(new CorMessage(crutchLog, logAndPass,null,false)); // отправляем пароль и логин
+        Thread.sleep(400);           //чере 400 милисекунд проверяем ответ- прав пароль или нет (true ore false)
+                    if(crutch==true) {
+                        startNewWindow();   //ес правильно открываем новое окно
+                    }
         os.flush();
-
     }
+
+
     public void startNewWindow() throws IOException {
         FXMLLoader loader =new FXMLLoader();
         loader.setLocation(getClass().getResource("cloud.fxml"));
@@ -66,7 +78,7 @@ public class Controller implements Initializable {
         Parent root =loader.getRoot();
         Stage stage =new Stage();
         stage.setScene(new Scene(root));
-        stage.showAndWait();
+        stage.showAndWait();            //из проблем немного не понял как убрать старое окно , а то 2 окна висят
     }
 
 
@@ -83,7 +95,9 @@ public class Controller implements Initializable {
                     try {
 
                             CorMessage message = (CorMessage) is.readObject();
-                            if (message.getAuthentication()==false){
+                            if (message.getAuthentication()==false){            //тоже не до конца понял как сделать что-бы этот класс запускался
+                                                                    //при открытие нужноо окна, метод начинает работать сразу как я его запустил и
+                                // пришлось делать проверку, мол пользователь прошел инициализацию или нет
 
 
 
@@ -93,8 +107,11 @@ public class Controller implements Initializable {
 
                                 System.out.println(serverMessage);
                             }
-                     //   if (message.getAuthentication()==true){ // если оставить условие то текс не пишется в area
+                        if (message.getAuthentication()==true) {
+                                crutch=message.getAuthentication();
+                        }
                             Platform.runLater(() -> out.appendText(message.getText() + "\n"));
+                        System.out.println(message.getUserName());
                         //}
 
 
