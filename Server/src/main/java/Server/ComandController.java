@@ -3,7 +3,7 @@ package Server;
 import java.io.File;
 
 public class ComandController {
-        private String serverDir = "C:\\Users\\Максим\\Desktop\\UsersCloud";
+    String serverDir = "C:\\Users\\Максим\\Desktop\\NettyCloudV0.1.1\\UsersCloud\\";
          // private String serverDir = "./";
     private String userName = "user";
     private static final int BUFFER_SIZE = 1024;

@@ -25,6 +25,7 @@ public class Controller implements Initializable {
 
     public TextField in;
     public TextArea out;
+    public TextArea CloudDir;
     private ObjectEncoderOutputStream os;
     private ObjectDecoderInputStream is;
     private boolean crutch=false;    //костыль
@@ -110,7 +111,7 @@ public class Controller implements Initializable {
                         if (message.getAuthentication()==true) {
                                 crutch=message.getAuthentication();
                         }
-                            Platform.runLater(() -> out.appendText(message.getText() + "\n"));
+                            Platform.runLater(() -> CloudDir.appendText(message.getText() + "\n"));
                         System.out.println(message.getUserName());
                         //}
 
@@ -132,4 +133,21 @@ public class Controller implements Initializable {
     }
 
 
+    public void open(ActionEvent actionEvent) throws IOException {
+        os.writeObject(new CorMessage(crutchLog, "cd "+in.getText(),null,false));
+    }
+
+    public void showMyDir(ActionEvent actionEvent) throws IOException {
+        String a=ClientCommand.printDirComand();
+        out.appendText(a);
+
+    }
+
+    public void showMyCloud(ActionEvent actionEvent) throws IOException {
+        os.writeObject(new CorMessage(crutchLog, "ls",null,false));
+    }
+
+    public void openMyDir(ActionEvent actionEvent) {
+
+    }
 }
